@@ -3,11 +3,19 @@ import { serveDir } from "jsr:@std/http/file-server";
 
 //直前の単語
 let previousWord = "しりとり";
+let wordHistries = ["しりとり"];
 
 // localhostにDenoのHTTPサーバーを展開
 Deno.serve(async (_req) => {
   const pathname = new URL(_req.url).pathname;
   console.log(`pathname: ${pathname}`);
+
+  if (_req.method === "POST" && pathname === "/reset") {
+    previousWord = "しりとり";
+    wordHistries.splice(0);
+    wordHistries.push("しりとり");
+    return new Response(previousWord);
+  }
 
   if (_req.method === "GET" && pathname === "/shiritori") {
     return new Response(previousWord);
@@ -22,6 +30,19 @@ Deno.serve(async (_req) => {
 
     // previousWordの末尾とnextWordの先頭が同一か確認
     if (previousWord.slice(-1) === nextWord.slice(0, 1)) {
+      if (nextWord.slice(-1) == "ん") {
+        return new Response(
+          JSON.stringify({
+            "errorMessage": "んで終わっています",
+            "errorCode": "10002",
+          }),
+          {
+            status: 400,
+            headers: { "Content-Type": "application/json; charset=utf-8" },
+          },
+        );
+      }
+
       // 同一であれば、previousWordを更新
       previousWord = nextWord;
     } // 同一でない単語の入力時に、エラーを返す
