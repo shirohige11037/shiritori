@@ -43,7 +43,23 @@ Deno.serve(async (_req) => {
         );
       }
 
+      for (let i = 0; i < wordHistries.length; i++) {
+        if (wordHistries[i] === nextWord) {
+          return new Response(
+            JSON.stringify({
+              "errorMessage": "すでに出た単語です",
+              "errorCode": "10003",
+            }),
+            {
+              status: 400,
+              headers: { "Content-Type": "application/json; charset=utf-8" },
+            },
+          );
+        }
+      }
+
       // 同一であれば、previousWordを更新
+      wordHistries.push(nextWord);
       previousWord = nextWord;
     } // 同一でない単語の入力時に、エラーを返す
     else {
