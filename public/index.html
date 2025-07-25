@@ -56,7 +56,13 @@
         alert(errorObj["errorMessage"]);
         if (errorObj["errorCode"] === "10002") {
           //ゲーム終了処理
-          
+          await fetch(
+            "/reset",
+            {
+              method: "POST"
+            }
+          );
+          window.location.href = 'gameOver.html';
           return;
         }
       }

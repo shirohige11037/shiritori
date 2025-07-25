@@ -28,6 +28,20 @@ Deno.serve(async (_req) => {
     // JSONの中からnextWordを取得
     const nextWord = requestJson["nextWord"];
 
+    var regex = /^[\p{scx=Hiragana}]+$/u;
+    if (!regex.test(nextWord)) {
+      return new Response(
+        JSON.stringify({
+          "errorMessage": "すべてひらがなで入力してください",
+          "errorCode": "10004",
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" },
+        },
+      );
+    }
+
     // previousWordの末尾とnextWordの先頭が同一か確認
     if (previousWord.slice(-1) === nextWord.slice(0, 1)) {
       if (nextWord.slice(-1) == "ん") {
