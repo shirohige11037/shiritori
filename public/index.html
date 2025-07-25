@@ -10,15 +10,19 @@
 </head>
 
 <body>
-  <!-- bodyタグの中には実際に表示するものなどを書く -->
-  <h1>しりとり</h1>
-  <!-- 現在の単語を表示する場所 -->
-  <p id="previousWord"></p>
-  <!-- 次の文字を入力するフォーム -->
-  <input id="nextWordInput" type="text" />
-  <button id="nextWordSendButton">送信</button>
-  <button id="resetButton">リセット</button>
-
+  <div class="Gradation_1">
+    <h1 id="mainText">しりとり</h1>
+    <!-- 現在の単語を表示する場所 -->
+    <p id="previousWord"></p>
+    <div id="form">
+      <!-- 次の文字を入力するフォーム -->
+      <input id="nextWordInput" type="text" />
+      <br>
+      <button id="nextWordSendButton">送信</button>
+      <br>
+      <button id="resetButton">リセット</button>
+    </div>
+  </div>
   <script>
     window.onload = async (event) => {
 
