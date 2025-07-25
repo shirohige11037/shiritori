@@ -19,6 +19,9 @@
       <input id="nextWordInput" type="text" />
       <br>
       <button id="nextWordSendButton">送信</button>
+      <select id=dictionary>
+        <option selected>すでに出た単語</option>
+      </select>
       <br>
       <button id="resetButton">リセット</button>
     </div>
@@ -29,11 +32,31 @@
       // GET /shiritoriを実行
       const response = await fetch("/shiritori", { method: "GET" });
       // responseの中からレスポンスのテキストデータを取得
-      const previousWord = await response.text();
+      //const previousWord = await response.text();
+      const json = await response.json();
+      var previousWord = json["nextWord"];
+      var wordHistory = json["wordHistry"];
       // id: previousWordのタグを取得
       const paragraph = document.querySelector("#previousWord");
       // 取得したタグの中身を書き換える
       paragraph.innerHTML = `前の単語: ${previousWord}`;
+
+      //ワード履歴
+      var dictionary = document.getElementById("dictionary");
+      while (dictionary.firstChild) {
+        dictionary.removeChild(dictionary.firstChild)
+      }
+      var first_option = document.createElement('option');
+      first_option.textContent = "すでに出た単語";
+      first_option.selected = true;
+      dictionary.appendChild(first_option);
+      for (var i = 0; i < wordHistory.length; i++) {
+        var new_word = document.createElement('option');
+        new_word.textContent = wordHistory[i];
+        new_word.class = "dictionaries";
+        new_word.disabled = true;
+        dictionary.appendChild(new_word);
+      }
     }
 
     // 送信ボタンの押下時に実行
@@ -71,7 +94,10 @@
         }
       }
 
-      const previousWord = await response.text();
+      //const previousWord = await response.text();
+      const json = await response.json();
+      var previousWord = json["nextWord"];
+      var wordHistory = json["wordHistry"];
 
       // id: previousWordのタグを取得
       const paragraph = document.querySelector("#previousWord");
@@ -79,6 +105,23 @@
       paragraph.innerHTML = `前の単語: ${previousWord}`;
       // inputタグの中身を消去する
       nextWordInput.value = "";
+
+      //ワード履歴
+      var dictionary = document.getElementById("dictionary");
+      while (dictionary.firstChild) {
+        dictionary.removeChild(dictionary.firstChild)
+      }
+      var first_option = document.createElement('option');
+      first_option.textContent = "すでに出た単語";
+      first_option.selected = true;
+      dictionary.appendChild(first_option);
+      for (var i = 0; i < wordHistory.length; i++) {
+        var new_word = document.createElement('option');
+        new_word.textContent = wordHistory[i];
+        new_word.class = "dictionaries";
+        new_word.disabled = true;
+        dictionary.appendChild(new_word);
+      }
     }
 
     // リセットボタンの押下時に実行
@@ -103,7 +146,10 @@
         alert(errorObj["errorMessage"]);
       }
 
-      const previousWord = await response.text();
+      //const previousWord = await response.text();
+      const json = await response.json();
+      var previousWord = json["nextWord"];
+      var wordHistory = json["wordHistry"];
 
       // id: previousWordのタグを取得
       const paragraph = document.querySelector("#previousWord");
@@ -111,6 +157,22 @@
       paragraph.innerHTML = `前の単語: ${previousWord}`;
       // inputタグの中身を消去する
       nextWordInput.value = "";
+
+      //ワード履歴
+      var dictionary = document.getElementById("dictionary");
+      while (dictionary.firstChild) {
+        dictionary.removeChild(dictionary.firstChild)
+      }
+      var first_option = document.createElement('option');
+      first_option.textContent = "すでに出た単語";
+      first_option.selected = true;
+      dictionary.appendChild(first_option);
+      for (var i = 0; i < wordHistory.length; i++) {
+        var new_word = document.createElement('option');
+        new_word.textContent = wordHistory[i];
+        new_word.disabled = true;
+        dictionary.appendChild(new_word);
+      }
     }
   </script>
 </body>

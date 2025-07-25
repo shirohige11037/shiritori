@@ -14,11 +14,29 @@ Deno.serve(async (_req) => {
     previousWord = "しりとり";
     wordHistries.splice(0);
     wordHistries.push("しりとり");
-    return new Response(previousWord);
+    return new Response(
+      JSON.stringify({
+        "nextWord": previousWord,
+        "wordHistry": wordHistries,
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+      },
+    );
   }
 
   if (_req.method === "GET" && pathname === "/shiritori") {
-    return new Response(previousWord);
+    return new Response(
+      JSON.stringify({
+        "nextWord": previousWord,
+        "wordHistry": wordHistries,
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+      },
+    );
   }
 
   // POST /shiritori: 次の単語を受け取って保存する
@@ -90,7 +108,17 @@ Deno.serve(async (_req) => {
     }
 
     // 現在の単語を返す
-    return new Response(previousWord);
+    //return new Response(previousWord);
+    return new Response(
+      JSON.stringify({
+        "nextWord": previousWord,
+        "wordHistry": wordHistries,
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+      },
+    );
   }
 
   // ./public以下のファイルを公開
