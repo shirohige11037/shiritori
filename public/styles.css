@@ -4,8 +4,8 @@ body {
   margin: 0;
 }
 
-#mainText{
-  text-align:center;
+#mainText {
+  text-align: center;
   margin-left: auto;
   margin-right: auto;
   padding: 10px 10px;
@@ -14,43 +14,43 @@ body {
   color: #323232;
 }
 
-#previousWord{
-  text-align:center;
+#previousWord {
+  text-align: center;
   margin-left: auto;
   margin-right: auto;
   color: #323232;
 }
 
-#form{
-  align-self:center;
+#form {
+  align-self: center;
 }
 
-button{
-  margin:5px auto 5px auto;
+button {
+  margin: 5px auto 5px auto;
   padding: 10px 20px;
   font-weight: bold;
   cursor: pointer;
 }
 
-#nextWordSendButton{
+#nextWordSendButton {
   color: rgb(54, 0, 108);
   background: linear-gradient(45deg, #b7ff00, #00ffe1);
   border: 4px solid rgb(36, 0, 165);
   transition: 0.3s;
 }
 
-#nextWordSendButton:hover{
+#nextWordSendButton:hover {
   opacity: 0.5;
 }
 
-#resetButton{
+#resetButton {
   color: white;
   background: linear-gradient(45deg, #e62298, #e74c3c);
   transition: 0.3s;
   border: 4px solid maroon;
 }
 
-#resetButton:hover{
+#resetButton:hover {
   opacity: 0.5;
 }
 
@@ -59,13 +59,19 @@ button{
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  background: linear-gradient(270deg, #87eba5 ,#a8f4f8);
+  background: linear-gradient(270deg, #93fdff, #efadff);
   background-size: 200% 200%;
   animation: Grad 5s ease infinite;
 }
 
 @keyframes Grad {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
