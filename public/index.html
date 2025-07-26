@@ -38,7 +38,7 @@
       var wordHistory = json["wordHistry"];
 
       //前の単語の書き換え
-      setPreviousWord(previousWord);
+      setPreviousWord(previousWord, nextWordInput);
 
       //ワード履歴
       setDictionaries(wordHistory);
@@ -85,7 +85,7 @@
       var wordHistory = json["wordHistry"];
 
       //前の単語の書き換え
-      setPreviousWord(previousWord);
+      setPreviousWord(previousWord, nextWordInput);
 
       //ワード履歴
       setDictionaries(wordHistory);
@@ -111,17 +111,19 @@
       var wordHistory = json["wordHistry"];
 
       //前の単語の書き換え
-      setPreviousWord(previousWord);
+      setPreviousWord(previousWord, nextWordInput);
 
       //ワード履歴
       setDictionaries(wordHistory);
     }
 
-    function setPreviousWord(previousWord) {
+    function setPreviousWord(previousWord, nextWordInput) {
       // id: previousWordのタグを取得
       const paragraph = document.querySelector("#previousWord");
       // 取得したタグの中身を書き換える
       paragraph.innerHTML = `前の単語: ${previousWord}`;
+      // inputタグの中身を消去する
+      nextWordInput.value = "";
     }
 
     function setDictionaries(wordHistory) {
