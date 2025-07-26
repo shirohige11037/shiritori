@@ -46,7 +46,7 @@ Deno.serve(async (_req) => {
     // JSONの中からnextWordを取得
     const nextWord = requestJson["nextWord"];
 
-    var regex = /^[\p{scx=Hiragana}]+$/u;
+    const regex = /^[\p{scx=Hiragana}]+$/u;
     if (!regex.test(nextWord)) {
       return new Response(
         JSON.stringify({

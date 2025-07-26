@@ -36,27 +36,12 @@
       const json = await response.json();
       var previousWord = json["nextWord"];
       var wordHistory = json["wordHistry"];
-      // id: previousWordのタグを取得
-      const paragraph = document.querySelector("#previousWord");
-      // 取得したタグの中身を書き換える
-      paragraph.innerHTML = `前の単語: ${previousWord}`;
+
+      //前の単語の書き換え
+      setPreviousWord(previousWord);
 
       //ワード履歴
-      var dictionary = document.getElementById("dictionary");
-      while (dictionary.firstChild) {
-        dictionary.removeChild(dictionary.firstChild)
-      }
-      var first_option = document.createElement('option');
-      first_option.textContent = "すでに出た単語";
-      first_option.selected = true;
-      dictionary.appendChild(first_option);
-      for (var i = 0; i < wordHistory.length; i++) {
-        var new_word = document.createElement('option');
-        new_word.textContent = wordHistory[i];
-        new_word.class = "dictionaries";
-        new_word.disabled = true;
-        dictionary.appendChild(new_word);
-      }
+      setDictionaries(wordHistory);
     }
 
     // 送信ボタンの押下時に実行
@@ -81,7 +66,7 @@
         const errorJson = await response.text();
         const errorObj = JSON.parse(errorJson);
         alert(errorObj["errorMessage"]);
-        if (errorObj["errorCode"] === "10002") {
+        if (errorObj["errorCode"] === "10002" || errorObj["errorCode"] === "10003") {
           //ゲーム終了処理
           await fetch(
             "/reset",
@@ -99,14 +84,47 @@
       var previousWord = json["nextWord"];
       var wordHistory = json["wordHistry"];
 
+      //前の単語の書き換え
+      setPreviousWord(previousWord);
+
+      //ワード履歴
+      setDictionaries(wordHistory);
+    }
+
+    // リセットボタンの押下時に実行
+    document.querySelector("#resetButton").onclick = async (event) => {
+      // inputタグを取得
+      const nextWordInput = document.querySelector("#nextWordInput");
+      // inputの中身を取得
+      const nextWordInputText = nextWordInput.value;
+      // POST /resetを実行
+      const response = await fetch(
+        "/reset",
+        {
+          method: "POST"
+        }
+      );
+
+      //const previousWord = await response.text();
+      const json = await response.json();
+      var previousWord = json["nextWord"];
+      var wordHistory = json["wordHistry"];
+
+      //前の単語の書き換え
+      setPreviousWord(previousWord);
+
+      //ワード履歴
+      setDictionaries(wordHistory);
+    }
+
+    function setPreviousWord(previousWord) {
       // id: previousWordのタグを取得
       const paragraph = document.querySelector("#previousWord");
       // 取得したタグの中身を書き換える
       paragraph.innerHTML = `前の単語: ${previousWord}`;
-      // inputタグの中身を消去する
-      nextWordInput.value = "";
+    }
 
-      //ワード履歴
+    function setDictionaries(wordHistory) {
       var dictionary = document.getElementById("dictionary");
       while (dictionary.firstChild) {
         dictionary.removeChild(dictionary.firstChild)
@@ -119,57 +137,6 @@
         var new_word = document.createElement('option');
         new_word.textContent = wordHistory[i];
         new_word.class = "dictionaries";
-        new_word.disabled = true;
-        dictionary.appendChild(new_word);
-      }
-    }
-
-    // リセットボタンの押下時に実行
-    document.querySelector("#resetButton").onclick = async (event) => {
-      // inputタグを取得
-      const nextWordInput = document.querySelector("#nextWordInput");
-      // inputの中身を取得
-      const nextWordInputText = nextWordInput.value;
-      // POST /shiritoriを実行
-      // 次の単語をresponseに格納
-      const response = await fetch(
-        "/reset",
-        {
-          method: "POST"
-        }
-      );
-
-      // status: 200以外が返ってきた場合にエラーを表示
-      if (response.status !== 200) {
-        const errorJson = await response.text();
-        const errorObj = JSON.parse(errorJson);
-        alert(errorObj["errorMessage"]);
-      }
-
-      //const previousWord = await response.text();
-      const json = await response.json();
-      var previousWord = json["nextWord"];
-      var wordHistory = json["wordHistry"];
-
-      // id: previousWordのタグを取得
-      const paragraph = document.querySelector("#previousWord");
-      // 取得したタグの中身を書き換える
-      paragraph.innerHTML = `前の単語: ${previousWord}`;
-      // inputタグの中身を消去する
-      nextWordInput.value = "";
-
-      //ワード履歴
-      var dictionary = document.getElementById("dictionary");
-      while (dictionary.firstChild) {
-        dictionary.removeChild(dictionary.firstChild)
-      }
-      var first_option = document.createElement('option');
-      first_option.textContent = "すでに出た単語";
-      first_option.selected = true;
-      dictionary.appendChild(first_option);
-      for (var i = 0; i < wordHistory.length; i++) {
-        var new_word = document.createElement('option');
-        new_word.textContent = wordHistory[i];
         new_word.disabled = true;
         dictionary.appendChild(new_word);
       }
